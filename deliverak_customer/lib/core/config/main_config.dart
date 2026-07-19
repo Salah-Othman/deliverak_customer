@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../security/secure_storage.dart';
 
 class MainConfig {
   static bool isFirstTime = true;
@@ -16,6 +17,9 @@ class MainConfig {
       await Supabase.initialize(
         url: dotenv.env['SUPABASE_URL']!,
         publishableKey: dotenv.env['SUPABASE_ANON_KEY']!,
+        authOptions: FlutterAuthClientOptions(
+          localStorage: SecureLocalStorage(),
+        ),
       );
 
       // 3. التحقق من حالة المستخدم (هل شاف الـ Onboarding؟)
