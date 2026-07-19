@@ -1,6 +1,10 @@
-import 'package:deliverak_customer/features/onboarding/onboarding_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/auth/domain/auth_cubit.dart';
+import '../../features/auth/presentation/login_screen.dart';
+import '../../features/onboarding/onboarding_view.dart';
+import '../../features/home/home_screen.dart';
 import '../config/main_config.dart';
 import 'app_routes.dart';
 
@@ -30,17 +34,16 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.login,
         builder: (BuildContext context, GoRouterState state) {
-          return const Scaffold(
-            body: Center(child: Text('شاشة تسجيل الدخول')),
+          return BlocProvider(
+            create: (context) => AuthCubit(),
+            child: const LoginScreen(),
           );
         },
       ),
       GoRoute(
         path: AppRoutes.home,
         builder: (BuildContext context, GoRouterState state) {
-          return const Scaffold(
-            body: Center(child: Text('الشاشة الرئيسية')),
-          );
+          return const HomeScreen();
         },
       ),
     ],
